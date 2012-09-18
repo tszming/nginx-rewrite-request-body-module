@@ -1,0 +1,83 @@
+Name
+    rewrite_request_body
+
+Description
+    This is a nginx module that reads HTTP POST and PUT request body in the rewrite phase
+    for nothing in order for you to use $request_body to rewrite urls in nginx's config.
+
+Installation
+    Get the nginx source code from nginx.net ( http://nginx.net/ ).
+    Unpack the source code and build nginx with this module.
+
+    $ wget 'http://sysoev.ru/nginx/nginx-X.X.X.tar.gz'
+    $ tar -xzvf nginx-X.X.X.tar.gz
+    $ cd nginx-X.X.X/
+
+    $ git clone https://github.com/tszming/nginx-rewrite-request-body-module.git
+    $ ./configure --add-module=nginx-rewrite-request-body-module
+    $ make -j2
+    $ make install
+
+Usage
+    rewrite_request_body;
+
+    example:
+
+        # nginx.conf
+
+        upstream pool1  {
+            server 127.0.0.1:8081;
+            server 127.0.0.1:8082;
+        }
+        
+        upstream pool2 {
+            server 127.0.0.1:8083;
+        }
+
+        location / {
+        
+            rewrite_request_body;
+            
+            proxy_pass http://pool1;
+            
+            if ($request_body ~* 'test') {
+                proxy_pass http://pool2;
+            }
+        }
+
+Copyright & License
+    
+    Based on https://github.com/calio/form-input-nginx-module.
+
+    Copyright (c) 2010, 2011, Taobao Inc., Alibaba Group ( http://www.taobao.com
+    ).
+
+    Copyright (c) 2010, 2011, Jiale "calio" Zhi <vipcalio@gmail.com>.
+
+    Copyright (c) 2010, 2011, Yichun "agentzh" Zhang <agentzh@gmail.com>.
+
+    This module is licensed under the terms of the BSD license.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are
+    met:
+
+    *   Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+    *   Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+    IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+    TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+    TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
