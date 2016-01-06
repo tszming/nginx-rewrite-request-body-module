@@ -6,7 +6,7 @@ Description
     for nothing in order for you to use $request_body to rewrite urls in nginx's config.
 
 Installation
-    Get the nginx source code from nginx.net ( http://nginx.net/ ).
+    Get the nginx source code (tested with nginx-1.2.3) from nginx.net ( http://nginx.net/ ).
     Unpack the source code and build nginx with this module.
 
     $ wget 'http://sysoev.ru/nginx/nginx-X.X.X.tar.gz'
